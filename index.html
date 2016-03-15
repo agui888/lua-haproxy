@@ -1,0 +1,730 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>haproxy.lua documentation</title>
+    <link rel="stylesheet" href="ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>haproxy.lua</h1>
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Class_Client">Class Client </a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>haproxy</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>haproxy</code></h1>
+<p>High-level Lua client for HAProxy.</p>
+<p> HAProxy <a href="http://www.arpalert.org/src/haproxy-lua-api/1.6/">exposes a Lua API</a>
+ that can be used to run Lua scripts inside HAProxy. The native API is quite
+ low-level. It may be considered a base for implementing more complex
+ functionality.</p>
+
+<p> This module wraps the native API with a friendly, object-oriented wrapper.
+ Lua code can load this module within an HAProxy applet context, or completely
+ outside HAProxy. The only requirement is that the module has access to the
+ <a href="http://git.haproxy.org/?p=haproxy-1.6.git;a=blob;f=doc/management.txt;hb=v1.6.3#l1007">stats socket</a>.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#parse_info">parse_info (data[, sep=':'])</a></td>
+	<td class="summary">Parse HAProxy info output to a table.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#parse_stats">parse_stats (csv[, sep='])</a></td>
+	<td class="summary">Convert HAProxy stats CSV output to a table.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#stats_types">stats_types</a></td>
+	<td class="summary">HAProxy stats types.</td>
+	</tr>
+</table>
+<h2><a href="#Class_Client">Class Client </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Client.new">Client.new (address[, stats[, stats]])</a></td>
+	<td class="summary">Create a new HAProxy client.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client.tcp">Client.tcp ()</a></td>
+	<td class="summary">Create a new TCP <code>Socket</code> instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:disable_server">Client:disable_server (backend, server)</a></td>
+	<td class="summary">Place <code>backend/server</code> in maintenace.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:enable_server">Client:enable_server (backend, server)</a></td>
+	<td class="summary">Place <code>backend/server</code> in traffic.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:execute">Client:execute (command)</a></td>
+	<td class="summary">Execute an HAProxy stats command.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_backend">Client:get_backend (id_or_name)</a></td>
+	<td class="summary">Show a specific backend.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_backends">Client:get_backends ()</a></td>
+	<td class="summary">List all backends.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_frontend">Client:get_frontend (id_or_name)</a></td>
+	<td class="summary">Retrieve a specific frontend.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_frontends">Client:get_frontends ()</a></td>
+	<td class="summary">List all frontends.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_server">Client:get_server (backend, id_or_name)</a></td>
+	<td class="summary">Retrieve a specific server.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_servers">Client:get_servers (backend)</a></td>
+	<td class="summary">Retrieve all servers belonging to a backend.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_state">Client:get_state (backend, server)</a></td>
+	<td class="summary">Retrieve a server's current state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:get_weight">Client:get_weight (backend, server)</a></td>
+	<td class="summary">Retrieve the current and initial server weights.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:info">Client:info ()</a></td>
+	<td class="summary">Returns table of parsed HAProxy instance information.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:set_weight">Client:set_weight (backend, server, weight)</a></td>
+	<td class="summary">Set a server's weight.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Client:stats">Client:stats ()</a></td>
+	<td class="summary">Returns table of parsed stats results.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "parse_info"></a>
+    <strong>parse_info (data[, sep=':'])</strong>
+    </dt>
+    <dd>
+    Parse HAProxy info output to a table.
+ The JSON representation of this table would be a sorted hash.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         key-value data
+        </li>
+        <li><span class="parameter">sep</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         key-value separator
+         (<em>default</em> ':')
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+        parsed data
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "parse_stats"></a>
+    <strong>parse_stats (csv[, sep='])</strong>
+    </dt>
+    <dd>
+    Convert HAProxy stats CSV output to a table.
+ The JSON representation of this table would be an array of hashes.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">csv</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         CSV data
+        </li>
+        <li><span class="parameter">sep</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         CSV separator
+         (<em>default</em> ')
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+        parsed data
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "stats_types"></a>
+    <strong>stats_types</strong>
+    </dt>
+    <dd>
+    HAProxy stats types.
+ These are integer codes used by the stats interface (specifically <code>show
+ stat</code>) to represent the source of each datum.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">FRONTEND</span>
+        frontend
+        </li>
+        <li><span class="parameter">BACKEND</span>
+        backend
+        </li>
+        <li><span class="parameter">SERVER</span>
+        server
+        </li>
+        <li><span class="parameter">SOCKET</span>
+        socket
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="http://git.haproxy.org/?p=haproxy-1.6.git;a=blob;f=include/proto/dumpstats.h;hb=v1.6.3">HAProxy 1.6.3 source: <code>include/proto/dumpstats.h</code></a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header has-description"><a name="Class_Client"></a>Class Client </h2>
+
+          <div class="section-description">
+          HAProxy stats socket client
+          </div>
+    <dl class="function">
+    <dt>
+    <a name = "Client.new"></a>
+    <strong>Client.new (address[, stats[, stats]])</strong>
+    </dt>
+    <dd>
+    Create a new HAProxy client.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">address</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         stats interface address
+        </li>
+        <li><span class="parameter">stats</span>
+            <span class="types"><span class="type">int</span></span>
+         connection timeout in seconds
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">stats</span>
+            <span class="types"><span class="type">int</span></span>
+         connection timeout in seconds
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client.tcp"></a>
+    <strong>Client.tcp ()</strong>
+    </dt>
+    <dd>
+    Create a new TCP <code>Socket</code> instance.  If running inside HAProxy, use the
+ LuaSocket-compatible <code>Socket</code> class. Otherwise, use LuaSocket.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Socket</span></span>
+
+
+
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="http://www.arpalert.org/src/haproxy-lua-api/1.6/#Socket"><em>How Lua runs in HAProxy</em>: <code>Socket</code></a></li>
+         <li><a href="https://luarocks.org/modules/luarocks/LuaSocket">LuaSocket</a></li>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Client:disable_server"></a>
+    <strong>Client:disable_server (backend, server)</strong>
+    </dt>
+    <dd>
+    Place <code>backend/server</code> in maintenace.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         backend name
+        </li>
+        <li><span class="parameter">server</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         server name
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:enable_server"></a>
+    <strong>Client:enable_server (backend, server)</strong>
+    </dt>
+    <dd>
+    Place <code>backend/server</code> in traffic.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         backend name
+        </li>
+        <li><span class="parameter">server</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         server name
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:execute"></a>
+    <strong>Client:execute (command)</strong>
+    </dt>
+    <dd>
+    Execute an HAProxy stats command.  Used by higher-level methods such as
+ <a href="index.html#Client:stats">Client:stats</a>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">command</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         command to execute
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+        string response
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_backend"></a>
+    <strong>Client:get_backend (id_or_name)</strong>
+    </dt>
+    <dd>
+    Show a specific backend.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id_or_name</span>
+         backend ID or name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_backends"></a>
+    <strong>Client:get_backends ()</strong>
+    </dt>
+    <dd>
+    List all backends.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_frontend"></a>
+    <strong>Client:get_frontend (id_or_name)</strong>
+    </dt>
+    <dd>
+    Retrieve a specific frontend.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id_or_name</span>
+         frontend ID or name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_frontends"></a>
+    <strong>Client:get_frontends ()</strong>
+    </dt>
+    <dd>
+    List all frontends.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_server"></a>
+    <strong>Client:get_server (backend, id_or_name)</strong>
+    </dt>
+    <dd>
+    Retrieve a specific server.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         backend name
+        </li>
+        <li><span class="parameter">id_or_name</span>
+         integer server ID or string name
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_servers"></a>
+    <strong>Client:get_servers (backend)</strong>
+    </dt>
+    <dd>
+    Retrieve all servers belonging to a backend.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_state"></a>
+    <strong>Client:get_state (backend, server)</strong>
+    </dt>
+    <dd>
+    Retrieve a server's current state.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">server</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:get_weight"></a>
+    <strong>Client:get_weight (backend, server)</strong>
+    </dt>
+    <dd>
+    Retrieve the current and initial server weights.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">server</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+
+
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:info"></a>
+    <strong>Client:info ()</strong>
+    </dt>
+    <dd>
+    Returns table of parsed HAProxy instance information.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+        parsed HAProxy instance info
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="index.html#Client:execute">Client:execute</a>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Client:set_weight"></a>
+    <strong>Client:set_weight (backend, server, weight)</strong>
+    </dt>
+    <dd>
+    Set a server's weight.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">backend</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">server</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">weight</span>
+         integer weight (<code>1</code>) or string percentage (<code>100%</code>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Client:stats"></a>
+    <strong>Client:stats ()</strong>
+    </dt>
+    <dd>
+    Returns table of parsed stats results.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+        parsed stats results
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="index.html#Client:execute">Client:execute</a>
+    </ul>
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2016-03-15 00:48:46 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
