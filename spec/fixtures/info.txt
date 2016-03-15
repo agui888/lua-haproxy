@@ -1,0 +1,34 @@
+Name: HAProxy
+Version: 1.6.3
+Release_date: 2015/12/25
+Nbproc: 1
+Process_num: 1
+Pid: 86316
+Uptime: 0d 0h29m34s
+Uptime_sec: 1774
+Memmax_MB: 0
+Ulimit-n: 4031
+Maxsock: 4031
+Maxconn: 2000
+Hard_maxconn: 2000
+CurrConns: 0
+CumConns: 10
+CumReq: 10
+Maxpipes: 0
+PipesUsed: 0
+PipesFree: 0
+ConnRate: 0
+ConnRateLimit: 0
+MaxConnRate: 1
+SessRate: 0
+SessRateLimit: 0
+MaxSessRate: 1
+CompressBpsIn: 0
+CompressBpsOut: 0
+CompressBpsRateLim: 0
+Tasks: 5
+Run_queue: 1
+Idle_pct: 100
+node: example
+description: 
+

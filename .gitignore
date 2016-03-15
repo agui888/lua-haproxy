@@ -1,0 +1,4 @@
+*.rock
+build/
+doc/
+luacov.*
