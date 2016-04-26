@@ -16,8 +16,6 @@ local Service = require('app.service')
 local views   = require('app.views')
 
 
-local logger = require('app.logger')
-
 -- declared here to satisfy strict mode
 local service
 
