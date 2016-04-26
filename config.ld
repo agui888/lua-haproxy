@@ -8,6 +8,7 @@ format = 'markdown'
 unqualified = true
 file = 'src/'
 sort = true
+merge = true
 
 custom_see_handler('^luarock: (.*)$', function(rock)
   local url = ('https://luarocks.org/modules/luarocks/%s'):format(rock)
