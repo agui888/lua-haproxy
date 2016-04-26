@@ -3,7 +3,7 @@
 PROJECT  = haproxy.lua
 PACKAGE  = haproxy
 ROCKSPEC = haproxy-scm-0.rockspec
-MODULES := $(shell scripts/deps.sh)
+MODULES := $(shell script/deps.sh)
 TARGET  := build/$(PROJECT)
 ROCK     = $(basename $(ROCKSPEC)).all.rock
 
