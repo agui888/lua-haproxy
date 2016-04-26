@@ -4,7 +4,7 @@ PROJECT  = haproxy.lua
 PACKAGE  = haproxy
 ROCKSPEC = haproxy-scm-0.rockspec
 MODULES := $(shell script/deps.sh)
-TARGET  := build/$(PROJECT)
+TARGET  := dist/$(PROJECT)
 ROCK     = $(basename $(ROCKSPEC)).all.rock
 
 ifeq ($(DEBUG),)
@@ -18,16 +18,18 @@ endif
 all: $(TARGET)
 
 $(TARGET):
-	mkdir -p build/
+	mkdir -p dist/
 	cd src && amalg.lua -a $(DEBUG_FLAGS) -o ../$@ -s main.lua -- $(MODULES) $(DEBUG_MODULES)
 
 $(ROCK):
 	luarocks make --pack-binary-rock
 
 clean:
-	$(RM) $(ROCK)
+	$(RM) -r dist/
 
 dist: $(ROCK)
+	mkdir -p dist/
+	mv $(ROCK) dist/$(ROCK)
 
 install:
 	luarocks make install
