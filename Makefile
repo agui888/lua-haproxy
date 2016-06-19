@@ -16,8 +16,8 @@ LUA      := $(PWD)/vendor/bin/lua
 LUAROCKS := $(PWD)/vendor/bin/luarocks
 AMALG    := $(PWD)/vendor/bin/amalg.lua
 
-export LUA_PATH  := $(shell $(LUAROCKS) path --lr-path)
-export LUA_CPATH := $(shell $(LUAROCKS) path --lr-cpath)
+export LUA_PATH  := $(shell $(LUAROCKS) path --lr-path);;
+export LUA_CPATH := $(shell $(LUAROCKS) path --lr-cpath);;
 
 all:
 	mkdir -p build
