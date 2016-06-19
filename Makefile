@@ -24,6 +24,7 @@ all:
 	cp -r lua/* build
 	cd build && $(LUA) -l amalg main.lua
 	cd build && $(AMALG) -o $(RELEASE).lua -s main.lua -a -c -x
+	cd build && ln -sf $(RELEASE).lua haproxy-latest.lua
 
 clean:
 	$(RM) $(ROCK)
