@@ -8,17 +8,30 @@ OS      := $(shell uname -s | tr [:upper:] [:lower:])
 ARCH    := $(shell uname -m)
 BUILD    = $(RELEASE)-$(OS)-$(ARCH)
 
-ROCKSPEC = $(PACKAGE)-scm-0.rockspec
-ROCK     = $(basename $(ROCKSPEC)).all.rock
+ROCKSPEC     = $(PACKAGE)-scm-0.rockspec
+ROCK         = $(basename $(ROCKSPEC)).all.rock
 
-all: $(ROCK)
+PWD	     := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+LUA      := $(PWD)/vendor/bin/lua
+LUAROCKS := $(PWD)/vendor/bin/luarocks
+AMALG    := $(PWD)/vendor/bin/amalg.lua
+
+export LUA_PATH  := $(shell $(LUAROCKS) path --lr-path)
+export LUA_CPATH := $(shell $(LUAROCKS) path --lr-cpath)
+
+all:
 	mkdir -p build
 	cp -r lua/* build
-	cd build && lua -lamalg main.lua
-	cd build && amalg.lua -o $(RELEASE).lua -s main.lua -a -c -x
+	cd build && $(LUA) -l amalg main.lua
+	cd build && $(AMALG) -o $(RELEASE).lua -s main.lua -a -c -x
 
 clean:
 	$(RM) $(ROCK)
+	$(RM) -r build
+
+depend:
+	$(LUAROCKS) install luafilesystem
+	$(LUAROCKS) install penlight
 
 dist: all
 	mkdir -p dist

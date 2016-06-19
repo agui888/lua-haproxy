@@ -1,6 +1,6 @@
 $script = <<EOF
 apt-get -y update
-apt-get -y install build-essential libreadline-dev libssl-dev lua5.2 liblua5.2 luarocks
+apt-get -y install build-essential git libreadline-dev libssl-dev unzip
 cd /vagrant/vendor
 make
 EOF
