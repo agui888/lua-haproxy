@@ -23,7 +23,7 @@ all:
 	mkdir -p build
 	cp -r lua/* build
 	cd build && $(LUA) -l amalg main.lua
-	cd build && $(AMALG) -s main.lua -a -c -x | sed '/amalg: start/,/amalg: end/d' > $(RELEASE).lua
+	cd build && $(AMALG) -s main.lua -a -c -x | sed '/amalg: start/,/amalg: end/d' | sed 's|$(PWD)||g' > $(RELEASE).lua
 	cd build && ln -sf $(RELEASE).lua haproxy-latest.lua
 
 clean:
