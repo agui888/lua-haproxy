@@ -1,8 +1,9 @@
+local core = require('haproxy.core')
 local util = require('haproxy.util')
 
 local M = {}
 
-function M.init(ctx)
+function M.init()
   core.ctx.uname = util.uname()
 end
 

@@ -1,8 +1,9 @@
+local core    = require('haproxy.core')
 local process = require('haproxy.process')
 
 local M = {}
 
-function M.init(ctx)
+function M.init()
   core.ctx.config = process.config()
 end
 
