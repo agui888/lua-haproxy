@@ -1,20 +1,17 @@
-function uname()
-  local f = assert(io.popen('uname -s', 'r'))
-  local os_name = assert(f:read('*a'))
-  f:close()
-  return os_name
+local util = require('haproxy.util')
+
+local M = {}
+
+function M.init(ctx)
+  core.ctx.uname = util.uname()
 end
 
-local os_name
-
-core.register_init(function()
-  os_name = uname()
-end)
-
-core.register_service('uname', 'http', function(applet)
+function M.service(applet)
   applet:set_status(200)
-  applet:add_header('Content-Length', string.len(os_name))
+  applet:add_header('Content-Length', string.len(core.ctx.uname))
   applet:add_header('Content-Type', 'text/plain')
   applet:start_response()
-  applet:send(os_name)
-end)
+  applet:send(core.ctx.uname)
+end
+
+return M
