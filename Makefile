@@ -31,6 +31,7 @@ clean:
 	$(RM) -r build
 
 depend:
+	$(LUAROCKS) install dkjson
 	$(LUAROCKS) install luafilesystem
 	$(LUAROCKS) install penlight
 	$(LUAROCKS) install router
