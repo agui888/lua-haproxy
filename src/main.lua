@@ -11,7 +11,6 @@
 local Request  = require('server.request')
 local http     = require('server.http')
 
-local Config  = require('app.config')
 local Service = require('app.service')
 local views   = require('app.views')
 
@@ -24,11 +23,7 @@ local service
 -- HAProxy executes this function once on startup.
 -- @usage core.register_init(init)
 function init()
-  local config = Config()
-  config:from_file(os.getenv('HAPROXY_API_CONFIG') or 'haproxy-api.ini')
-  -- Override with environment variables.
-  config:from_env()
-  service = Service(config)
+  service = Service()
   service:register_routes({
     ['/info']                                     = views.InfoView.as_view,
     ['/stats']                                    = views.StatsView.as_view,

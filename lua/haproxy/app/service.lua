@@ -16,13 +16,11 @@ local Service = class()
 
 --- Initialize a new API instance.
 -- @tparam table config application configuration
--- @usage service = Service({ stats_socket = '/run/haproxy.sock' })
 -- @function Service.new
 -- @see init
-function Service:_init(config)
+function Service:_init()
   self.router = router.new()
-  self.config = config
-  self.stats  = stats.Client(self.config:get('stats_socket'))
+  self.stats  = stats.Client('/tmp/haproxy.sock')
 end
 
 Service.new = Service
