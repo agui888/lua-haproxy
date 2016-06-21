@@ -1,6 +1,7 @@
 --- @module server
 
-local class = require('pl.class')
+local class  = require('pl.class')
+local tablex = require('pl.tablex')
 
 local http = require('haproxy.server.http')
 
@@ -18,7 +19,8 @@ class.Response()
 function Response:_init(status_code, body, headers)
   self.status_code = status_code or http.status.OK
   self.body = body or ''
-  self.headers = headers or { ['Content-Length'] = self.body:len(), }
+  local default_headers = { ['Content-Length'] = self.body:len() }
+  self.headers = tablex.update(default_headers, headers or {})
 end
 
 Response.new = Response

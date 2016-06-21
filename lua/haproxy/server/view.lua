@@ -21,7 +21,6 @@ function View:options(request)
   local methods = stringx.join(', ', self:methods())
   return Response(http.status.NO_CONTENT, '', {
     Allow = methods,
-    ['Content-Length'] = 0,
   })
 end
 

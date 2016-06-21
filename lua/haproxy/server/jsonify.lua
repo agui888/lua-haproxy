@@ -29,8 +29,7 @@ function jsonify(obj)
   end
   local body = json.encode(obj, json_encode_state)
   local headers = {
-    ['Content-Length'] = body:len(),
-    ['Content-Type']   = 'application/json',
+    ['Content-Type'] = 'application/json',
   }
   local response = Response(http.status.OK, body, headers)
   return response
