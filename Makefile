@@ -33,6 +33,7 @@ clean:
 depend:
 	$(LUAROCKS) install luafilesystem
 	$(LUAROCKS) install penlight
+	$(LUAROCKS) install router
 
 dist: all
 	mkdir -p dist
