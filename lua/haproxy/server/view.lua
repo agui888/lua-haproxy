@@ -3,8 +3,8 @@
 local class   = require('pl.class')
 local stringx = require('pl.stringx')
 
-local Response = require('server.response')
-local http     = require('server.http')
+local Response = require('haproxy.server.response')
+local http     = require('haproxy.server.http')
 
 class.View()
 
