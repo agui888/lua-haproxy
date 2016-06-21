@@ -2,7 +2,7 @@
 
 local class = require('pl.class')
 
-local http = require('server.http')
+local http = require('haproxy.server.http')
 
 --- A Response represents an API response.
 -- @type Response

@@ -5,10 +5,9 @@ local router = require('router')
 local class  = require('pl.class')
 local tablex = require('pl.tablex')
 
-local Response = require('server.response')
-local http     = require('server.http')
-
-local haproxy  = require('client')
+local Response = require('haproxy.server.response')
+local http     = require('haproxy.server.http')
+local stats    = require('haproxy.stats')
 
 --- Service wraps the service configuration and HTTP router.
 -- HAProxy initializes an instance of this class on startup.
@@ -21,9 +20,9 @@ local Service = class()
 -- @function Service.new
 -- @see init
 function Service:_init(config)
-  self.router  = router.new()
-  self.config  = config
-  self.haproxy = haproxy.Client(self.config:get('stats_socket'))
+  self.router = router.new()
+  self.config = config
+  self.stats  = stats.Client(self.config:get('stats_socket'))
 end
 
 Service.new = Service

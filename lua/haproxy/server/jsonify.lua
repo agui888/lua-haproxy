@@ -2,8 +2,8 @@
 
 local json = require('dkjson')
 
-local http     = require('server.http')
-local response = require('server.response')
+local http     = require('haproxy.server.http')
+local response = require('haproxy.server.response')
 
 --- Check if `value` is a table.
 -- @param value object

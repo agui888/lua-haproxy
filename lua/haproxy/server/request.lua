@@ -8,7 +8,7 @@ local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')
 local url     = require('pl.url')
 
-local http    = require('server.http')
+local http    = require('haproxy.server.http')
 
 --- A Request represents an API request.
 -- @type Request
