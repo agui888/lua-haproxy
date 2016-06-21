@@ -1,0 +1,7 @@
+-- vim: set ft=lua:
+
+return {
+  _all = {
+    lpath    = './lua/?.lua;./lua/?/?.lua;./lua/?/init.lua',
+  }
+}
