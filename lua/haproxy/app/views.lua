@@ -1,8 +1,10 @@
 return {
+  ConfigView       = require('haproxy.app.views.info'),
   InfoView         = require('haproxy.app.views.info'),
+  ProxyView        = require('haproxy.app.views.proxy'),
+  ServerStateView  = require('haproxy.app.views.serverstate'),
   ServerView       = require('haproxy.app.views.server'),
   ServerWeightView = require('haproxy.app.views.serverweight'),
-  ServerStateView  = require('haproxy.app.views.serverstate'),
   StatsView        = require('haproxy.app.views.stats'),
-  ProxyView        = require('haproxy.app.views.proxy'),
+  UnameView        = require('haproxy.app.views.info'),
 }
