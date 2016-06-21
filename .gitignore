@@ -1,4 +1,5 @@
 *.rock
+.vagrant/
 build/
 dist/
 doc/
