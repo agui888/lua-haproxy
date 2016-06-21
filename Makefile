@@ -1,25 +1,42 @@
-.PHONY: all doc install test
+.PHONY: all doc dist install test
 
 PROJECT  = haproxy.lua
 PACKAGE  = haproxy
-ROCKSPEC = haproxy-scm-0.rockspec
-MODULES := $(shell script/deps.sh)
-TARGET  := dist/$(PROJECT)
-ROCK     = $(basename $(ROCKSPEC)).all.rock
+VERSION := $(shell git describe --always --dirty)
+RELEASE  = $(PACKAGE)-$(VERSION)
+OS      := $(shell uname -s | tr [:upper:] [:lower:])
+ARCH    := $(shell uname -m)
+BUILD    = $(RELEASE)-$(OS)-$(ARCH)
 
-ifeq ($(DEBUG),)
-DEBUG_FLAGS   =
-DEBUG_MODULES =
-else
-DEBUG_FLAGS   = -d
-DEBUG_MODULES = pl.pretty pl.lexer
-endif
+ROCKSPEC     = $(PACKAGE)-scm-0.rockspec
+ROCK         = $(basename $(ROCKSPEC)).all.rock
 
-all: $(TARGET)
+PWD	     := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+LUA      := $(PWD)/vendor/bin/lua
+LUAROCKS := $(PWD)/vendor/bin/luarocks
+AMALG    := $(PWD)/vendor/bin/amalg.lua
 
-$(TARGET):
-	mkdir -p dist/
-	cd src && amalg.lua -a $(DEBUG_FLAGS) -o ../$@ -s main.lua -- $(MODULES) $(DEBUG_MODULES)
+export LUA_PATH  := $(shell $(LUAROCKS) path --lr-path);;
+export LUA_CPATH := $(shell $(LUAROCKS) path --lr-cpath);;
+
+all:
+	mkdir -p build
+	cp -r lua/* build
+	cd build && $(LUA) -l amalg main.lua
+	cd build && $(AMALG) -s main.lua -a -c -x | sed '/amalg: start/,/amalg: end/d' | sed 's|$(PWD)||g' > $(RELEASE).lua
+	cd build && ln -sf $(RELEASE).lua haproxy-latest.lua
+
+clean:
+	$(RM) $(ROCK)
+	$(RM) -r build
+
+depend:
+	$(LUAROCKS) install luafilesystem
+	$(LUAROCKS) install penlight
+
+dist: all
+	mkdir -p dist
+	tar -czf dist/$(BUILD).tar.gz -C build $(RELEASE).lua
 
 $(ROCK):
 	luarocks make --pack-binary-rock

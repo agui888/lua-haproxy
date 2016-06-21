@@ -1,4 +1,5 @@
 *.rock
 build/
+dist/
 doc/
 luacov.*

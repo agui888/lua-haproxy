@@ -10,7 +10,7 @@
 -- outside HAProxy. The only requirement is that the module has access to the
 -- [stats socket](http://git.haproxy.org/?p=haproxy-1.6.git;a=blob;f=doc/management.txt;hb=v1.6.3#l1007).
 --
--- @module client
+-- @module haproxy
 local class   = require('pl.class')
 local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')

@@ -15,7 +15,11 @@ dependencies = {
 build = {
   type = 'builtin',
   modules = {
-    haproxy = 'src/haproxy.lua',
+    ['haproxy']                   = 'lua/haproxy/init.lua',
+    ['haproxy.middleware.config'] = 'lua/haproxy/middleware/config.lua',
+    ['haproxy.middleware.uname']  = 'lua/haproxy/middleware/uname.lua',
+    ['haproxy.process']           = 'lua/haproxy/process.lua',
+    ['haproxy.stats']             = 'lua/haproxy/stats.lua',
   },
   copy_directories = {
     'doc',
