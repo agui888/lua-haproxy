@@ -14,7 +14,7 @@ local http    = require('haproxy.server.http')
 local Service = require('haproxy.service')
 local views   = require('haproxy.apps.views')
 local config  = require('haproxy.apps.config')
-local uname   = require('haproxy.middleware.uname')
+local uname   = require('haproxy.apps.uname')
 
 -- declared here to satisfy strict mode
 local service
@@ -24,9 +24,9 @@ local service
 -- HAProxy executes this function once on startup.
 -- @usage core.register_init(init)
 function init()
---  uname.init()
   service = Service()
   service:mount(config, '/config')
+  service:mount(uname, '/uname')
   service:register_routes({
     ['/info']                                     = views.InfoView.as_view,
     ['/stats']                                    = views.StatsView.as_view,
@@ -38,7 +38,6 @@ function init()
     ['/backends/:backend/servers/:server/state']  = views.ServerStateView.as_view,
     ['/frontends']                                = views.ProxyView.as_view,
     ['/frontends/:frontend']                      = views.ProxyView.as_view,
-    ['/uname']                                    = views.UnameView.as_view,
   })
 end
 
