@@ -46,14 +46,15 @@ end
 --- Register routes.
 -- @tparam table routes routes to register
 -- @usage Service:register_routes({ ['/info'] = get_info })
-function Service:register_routes(routes)
+function Service:register_routes(routes, prefix)
+  local prefix = prefix or ''
   -- We defer method handling to views. Configure the router to send all methods
   -- to each view.
   local matches = {}
   for _, method in pairs(http.method) do
     matches[method] = {}
     for url, view in pairs(routes) do
-      matches[method][url] = view
+      matches[method][prefix .. url] = view
     end
   end
   self.router:match(matches)
