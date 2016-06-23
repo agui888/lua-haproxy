@@ -59,6 +59,17 @@ function Service:register_routes(routes)
   self.router:match(matches)
 end
 
+function Service:mount(engine, prefix)
+  local prefix = prefix or '/'
+  engine.init()
+  local matches = {}
+  for _, method in pairs(http.method) do
+    matches[method] = {}
+    matches[method][prefix] = engine.view.as_view
+  end
+  self.router:match(matches)
+end
+
 function Service:serve(applet)
   local request = Request.from_applet(applet)
   local response = self:dispatch(request)

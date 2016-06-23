@@ -11,8 +11,8 @@ local core    = require('haproxy.core')
 
 local Request = require('haproxy.server.request')
 local http    = require('haproxy.server.http')
-local Service = require('haproxy.app.service')
-local views   = require('haproxy.app.views')
+local Service = require('haproxy.service')
+local views   = require('haproxy.apps.views')
 local config  = require('haproxy.middleware.config')
 local uname   = require('haproxy.middleware.uname')
 
