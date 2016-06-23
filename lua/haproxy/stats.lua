@@ -15,6 +15,8 @@ local class   = require('pl.class')
 local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')
 
+local util = require('haproxy.util')
+
 --- HAProxy stats types.
 -- These are integer codes used by the stats interface (specifically `show
 -- stat`) to represent the source of each datum.
@@ -25,10 +27,6 @@ stats_types = {
   SERVER   = 2, -- server
   SOCKET   = 3, -- socket
 }
-
-local function has_function(obj, method)
-  return type(obj) == 'table' and obj[method] and type(obj[method]) == 'function'
-end
 
 --- Parse HAProxy info output to a table.
 -- The JSON representation of this table would be a sorted hash.
@@ -102,7 +100,7 @@ Client.new = Client
 -- @see haproxy_lua: `Socket`
 -- @see luarock: LuaSocket
 function Client.tcp()
-  if has_function(core, 'tcp') then
+  if util.has_function(core, 'tcp') then
     -- running inside HAProxy
     return core.tcp()
   end

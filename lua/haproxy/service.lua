@@ -8,6 +8,7 @@ local tablex = require('pl.tablex')
 local Response = require('haproxy.server.response')
 local http     = require('haproxy.server.http')
 local stats    = require('haproxy.stats')
+local util     = require('haproxy.util')
 
 --- Service wraps the service configuration and HTTP router.
 -- HAProxy initializes an instance of this class on startup.
@@ -60,15 +61,16 @@ function Service:register_routes(routes, prefix)
   self.router:match(matches)
 end
 
-function Service:mount(engine, prefix)
-  local prefix = prefix or '/'
-  engine.init()
-  local matches = {}
-  for _, method in pairs(http.method) do
-    matches[method] = {}
-    matches[method][prefix] = engine.view.as_view
+function Service:mount(app, prefix)
+  local prefix = prefix or ''
+
+  if util.has_function(app, 'init') then app.init() end
+
+  local prefixed_routes = {}
+  for route, view in pairs(app.routes) do
+    prefixed_routes[prefix .. route] = view
   end
-  self.router:match(matches)
+  self:register_routes(prefixed_routes)
 end
 
 function Service:serve(applet)

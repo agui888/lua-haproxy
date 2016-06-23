@@ -7,4 +7,8 @@ function M.uname()
   return os_name
 end
 
+function M.has_function(obj, method)
+  return type(obj) == 'table' and obj[method] and type(obj[method]) == 'function'
+end
+
 return M

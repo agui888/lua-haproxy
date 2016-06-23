@@ -1,3 +1,5 @@
+local core     = require('haproxy.core')
+local process  = require('haproxy.process')
 local Response = require('haproxy.server.response')
 local View     = require('haproxy.server.view')
 
@@ -7,4 +9,13 @@ function ConfigView:get(request, context)
   return Response(200, core.ctx.config)
 end
 
-return ConfigView
+local function init()
+  core.ctx.config = process.config()
+end
+
+return {
+  init   = init,
+  routes = {
+    ['/'] = ConfigView.as_view,
+  }
+}

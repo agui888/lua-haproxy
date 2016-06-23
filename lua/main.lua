@@ -13,7 +13,7 @@ local Request = require('haproxy.server.request')
 local http    = require('haproxy.server.http')
 local Service = require('haproxy.service')
 local views   = require('haproxy.apps.views')
-local config  = require('haproxy.middleware.config')
+local config  = require('haproxy.apps.config')
 local uname   = require('haproxy.middleware.uname')
 
 -- declared here to satisfy strict mode
@@ -24,12 +24,10 @@ local service
 -- HAProxy executes this function once on startup.
 -- @usage core.register_init(init)
 function init()
-  config.init()
-  uname.init()
-
+--  uname.init()
   service = Service()
+  service:mount(config, '/config')
   service:register_routes({
-    ['/config']                                   = views.ConfigView.as_view,
     ['/info']                                     = views.InfoView.as_view,
     ['/stats']                                    = views.StatsView.as_view,
     ['/backends']                                 = views.ProxyView.as_view,
