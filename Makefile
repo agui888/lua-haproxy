@@ -29,6 +29,7 @@ all:
 clean:
 	$(RM) $(ROCK)
 	$(RM) -r build
+	$(RM) -r dist
 
 depend:
 	$(LUAROCKS) install dkjson
@@ -36,19 +37,13 @@ depend:
 	$(LUAROCKS) install penlight
 	$(LUAROCKS) install router
 
-dist: all
+dist: all $(ROCK)
 	mkdir -p dist
 	tar -czf dist/$(BUILD).tar.gz -C build $(RELEASE).lua
+	mv $(ROCK) dist/$(ROCK)
 
 $(ROCK):
 	luarocks make --pack-binary-rock
-
-clean:
-	$(RM) -r dist/
-
-dist: $(ROCK)
-	mkdir -p dist/
-	mv $(ROCK) dist/$(ROCK)
 
 install:
 	luarocks make install
