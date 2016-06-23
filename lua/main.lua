@@ -9,8 +9,6 @@
 --   http-request use-service lua.haproxy-api
 local core    = require('haproxy.core')
 
-local Request = require('haproxy.server.request')
-local http    = require('haproxy.server.http')
 local Service = require('haproxy.service')
 local config  = require('haproxy.apps.config')
 local stats   = require('haproxy.apps.stats')
