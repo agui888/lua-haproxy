@@ -12,8 +12,8 @@ local core    = require('haproxy.core')
 local Request = require('haproxy.server.request')
 local http    = require('haproxy.server.http')
 local Service = require('haproxy.service')
-local views   = require('haproxy.apps.views')
 local config  = require('haproxy.apps.config')
+local stats   = require('haproxy.apps.stats')
 local uname   = require('haproxy.apps.uname')
 
 -- declared here to satisfy strict mode
@@ -26,19 +26,8 @@ local service
 function init()
   service = Service()
   service:mount(config, '/config')
+  service:mount(stats, '/stats')
   service:mount(uname, '/uname')
-  service:register_routes({
-    ['/info']                                     = views.InfoView.as_view,
-    ['/stats']                                    = views.StatsView.as_view,
-    ['/backends']                                 = views.ProxyView.as_view,
-    ['/backends/:backend']                        = views.ProxyView.as_view,
-    ['/backends/:backend/servers']                = views.ServerView.as_view,
-    ['/backends/:backend/servers/:server']        = views.ServerView.as_view,
-    ['/backends/:backend/servers/:server/weight'] = views.ServerWeightView.as_view,
-    ['/backends/:backend/servers/:server/state']  = views.ServerStateView.as_view,
-    ['/frontends']                                = views.ProxyView.as_view,
-    ['/frontends/:frontend']                      = views.ProxyView.as_view,
-  })
 end
 
 --- The main service entry point.
