@@ -1,3 +1,4 @@
+local stats   = require('haproxy.stats')
 local View    = require('haproxy.server.view')
 local jsonify = require('haproxy.server.jsonify')
 
@@ -5,11 +6,16 @@ local views   = require('haproxy.apps.stats.views')
 
 local StatsView = View.new('StatsView')
 
+local function init()
+  core.ctx.stats = stats.Client('/tmp/haproxy.sock')
+end
+
 function StatsView:get(request, context)
   return jsonify(context.stats:stats())
 end
 
 return {
+  init = init,
   routes = {
     ['/']                                         = StatsView.as_view,
     ['/info']                                     = views.InfoView.as_view,

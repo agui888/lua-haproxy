@@ -7,7 +7,7 @@ local class  = require('pl.class')
 local Request  = require('haproxy.server.request')
 local Response = require('haproxy.server.response')
 local http     = require('haproxy.server.http')
-local stats    = require('haproxy.stats')
+local core     = require('haproxy.core')
 local util     = require('haproxy.util')
 
 --- Service wraps the service configuration and HTTP router.
@@ -21,7 +21,6 @@ local Service = class()
 -- @see init
 function Service:_init()
   self.router = router.new()
-  self.stats  = stats.Client('/tmp/haproxy.sock')
 end
 
 Service.new = Service
@@ -41,7 +40,7 @@ function Service:dispatch(request)
     return Response(http.status.NOT_FOUND)
   end
   request.view_args = view_args
-  return view(request, self)
+  return view(request, core.ctx)
 end
 
 --- Register routes.
