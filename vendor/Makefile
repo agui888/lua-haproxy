@@ -1,4 +1,4 @@
-.PHONY: all clean cleanall haproxy lua lua-amalg luarocks
+.PHONY: all clean cleanall
 
 HAPROXY_VERSION     = 1.6.5
 HAPROXY             = haproxy-$(HAPROXY_VERSION)
@@ -35,7 +35,19 @@ ifeq ($(UNAME),Darwin)
 	HAPROXY_BUILD_FLAGS += LUA_LD_FLAGS="-Wl,-export_dynamic -L$(PWD)/lib"
 endif
 
-all: haproxy luarocks lua-amalg
+all: sbin/haproxy bin/luarocks bin/amalg.lua
+
+bin/amalg.lua: src/$(LUA_AMALG)
+	cd src/$(LUA_AMALG) && $(PWD)/bin/luarocks install amalg-scm-0.rockspec
+
+bin/lua: src/$(LUA)
+	$(MAKE) -C $< $(LUA_PLATFORM)
+	$(MAKE) -C $< install INSTALL_TOP=$(PWD)
+
+bin/luarocks: src/$(LUAROCKS)
+	cd src/$(LUAROCKS) && ./configure --prefix=$(PWD) --with-lua=$(PWD) --force-config
+	$(MAKE) -C $< build
+	$(MAKE) -C $< install
 
 clean:
 	-$(MAKE) -C src/$(HAPROXY) clean
@@ -46,21 +58,9 @@ clean:
 cleanall: clean
 	$(RM) -r src
 
-haproxy: src/$(HAPROXY) lua
+sbin/haproxy: src/$(HAPROXY) bin/lua
 	$(MAKE) -C $< TARGET=$(HAPROXY_TARGET) $(HAPROXY_BUILD_FLAGS)
 	$(MAKE) -C $< install PREFIX= DESTDIR=$(PWD)
-
-lua: src/$(LUA)
-	$(MAKE) -C $< $(LUA_PLATFORM)
-	$(MAKE) -C $< install INSTALL_TOP=$(PWD)
-
-lua-amalg: luarocks
-	cd src/$(LUA_AMALG) && $(PWD)/bin/luarocks install amalg-scm-0.rockspec
-
-luarocks: src/$(LUAROCKS) lua
-	cd src/$(LUAROCKS) && ./configure --prefix=$(PWD) --with-lua=$(PWD) --force-config
-	$(MAKE) -C $< build
-	$(MAKE) -C $< install
 
 src:
 	$(MKDIR) src
