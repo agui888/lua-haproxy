@@ -21,7 +21,7 @@ local service
 -- Load the API configuration and routing table.
 -- HAProxy executes this function once on startup.
 -- @usage core.register_init(init)
-function init()
+local function init()
   service = Service()
   service:mount(config, '/config')
   service:mount(stats, '/stats')
@@ -31,7 +31,7 @@ end
 --- The main service entry point.
 -- @param applet HAProxy applet context
 -- @usage core.register_service('haproxy-api', 'http', main)
-function main(applet)
+local function main(applet)
   service:serve(applet)
 end
 

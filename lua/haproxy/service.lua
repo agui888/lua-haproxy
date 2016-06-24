@@ -3,7 +3,6 @@
 local router = require('router')
 
 local class  = require('pl.class')
-local tablex = require('pl.tablex')
 
 local Request  = require('haproxy.server.request')
 local Response = require('haproxy.server.response')

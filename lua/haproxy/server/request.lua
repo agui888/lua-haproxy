@@ -12,7 +12,7 @@ local http    = require('haproxy.server.http')
 
 --- A Request represents an API request.
 -- @type Request
-class.Request()
+local Request = class()
 
 function Request:_init(request)
   local fields = Set{

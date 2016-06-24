@@ -15,13 +15,14 @@ local class   = require('pl.class')
 local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')
 
+local core = require('haproxy.core')
 local util = require('haproxy.util')
 
 --- HAProxy stats types.
 -- These are integer codes used by the stats interface (specifically `show
 -- stat`) to represent the source of each datum.
 -- @see haproxy 1.6.3: include/proto/dumpstats.h
-stats_types = {
+local stats_types = {
   FRONTEND = 0, -- frontend
   BACKEND  = 1, -- backend
   SERVER   = 2, -- server
@@ -55,7 +56,6 @@ end
 -- @treturn table parsed data
 local function parse_stats(csv, sep)
   local results = {}
-  local headers = {}
   local headers, _, data = stringx.partition(csv, '\n')
   local sep = sep or ','
   data = stringx.strip(data)
@@ -79,7 +79,7 @@ end
 
 --- HAProxy stats socket client
 -- @type Client
-class.Client()
+local Client = class()
 
 --- Create a new HAProxy client.
 -- @tparam string address stats interface address
@@ -258,6 +258,7 @@ end
 -- @tparam string backend
 -- @tparam string server
 -- @treturn table
+-- FIXME: not implemented
 function Client:get_state(backend, server)
   local response = self:execute('show servers state ' .. backend)
   local _, _, data = stringx.partition(response, '\n')

@@ -6,7 +6,7 @@ local stringx = require('pl.stringx')
 local Response = require('haproxy.server.response')
 local http     = require('haproxy.server.http')
 
-class.View()
+local View = class()
 
 function View:dispatch(request, context)
   local method = request.method:lower()

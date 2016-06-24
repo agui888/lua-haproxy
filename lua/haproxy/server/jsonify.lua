@@ -3,7 +3,7 @@
 local json = require('dkjson')
 
 local http     = require('haproxy.server.http')
-local response = require('haproxy.server.response')
+local Response = require('haproxy.server.response')
 
 --- Check if `value` is a table.
 -- @param value object
@@ -15,7 +15,7 @@ local function is_table(value) return type(value) == 'table' end
 -- length of the serialized obj. If `obj` is a table, sorts the keys. 
 -- @param obj object to serialize
 -- @treturn Response the JSON response
-function jsonify(obj)
+local function jsonify(obj)
   local json_encode_state = {}
   if is_table(obj) then
     local keys = {}
@@ -31,8 +31,7 @@ function jsonify(obj)
   local headers = {
     ['Content-Type'] = 'application/json',
   }
-  local response = Response(http.status.OK, body, headers)
-  return response
+  return Response(http.status.OK, body, headers)
 end
 
 return jsonify

@@ -10,7 +10,7 @@ end
 function M.config()
   local cmdline = M.cmdline()
   local files = {}
-  local token, previous
+  local previous
   local remainder = false
   for token in string.gmatch(cmdline, '%g+') do
     -- -- signifies that the remaining arguments are configuration files.

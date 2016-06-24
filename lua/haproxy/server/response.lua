@@ -7,7 +7,7 @@ local http = require('haproxy.server.http')
 
 --- A Response represents an API response.
 -- @type Response
-class.Response()
+local Response = class()
 
 --- Construct an API response.
 -- @tparam[opt=200] int status_code HTTP status code

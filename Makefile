@@ -1,4 +1,4 @@
-.PHONY: all doc dist install test
+.PHONY: all check clean depend dist doc install uninstall test
 
 PROJECT  = haproxy.lua
 PACKAGE  = haproxy
@@ -25,6 +25,9 @@ all:
 	cd build && $(LUA) -l amalg main.lua
 	cd build && $(AMALG) -s main.lua -a -c -x | sed '/amalg: start/,/amalg: end/d' | sed 's|$(PWD)||g' > $(RELEASE).lua
 	cd build && ln -sf $(RELEASE).lua haproxy-latest.lua
+
+check:
+	luacheck lua/
 
 clean:
 	$(RM) $(ROCK)

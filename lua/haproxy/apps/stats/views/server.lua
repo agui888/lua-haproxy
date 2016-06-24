@@ -2,7 +2,6 @@ local http     = require('haproxy.server.http')
 local jsonify  = require('haproxy.server.jsonify')
 local Response = require('haproxy.server.response')
 local View     = require('haproxy.server.view')
-local stats    = require('haproxy.stats')
 
 local ServerView = View.new('ServerView')
 
