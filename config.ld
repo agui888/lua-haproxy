@@ -6,7 +6,7 @@ style = '!fixed'
 use_markdown_titles = true
 format = 'markdown'
 unqualified = true
-file = 'src/'
+file = 'lua/'
 sort = true
 merge = true
 
