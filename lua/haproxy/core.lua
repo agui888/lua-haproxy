@@ -1,7 +1,7 @@
-local _core = core or {}
+local core = _G['core'] or {}
 
 -- Shared state between middleware.
-_core.ctx = {}
+core.ctx = {}
 
 -- Problem: amalg executes a script (`lua -l amalg`) to identify its
 -- dependencies However, HAProxy API functions are only available in an HAProxy
@@ -11,6 +11,7 @@ _core.ctx = {}
 -- metatable will provide anonymous functions to satisfy calls like
 -- `core.register_service()`.
 if package.loaded['amalg'] then
-  setmetatable(_core, { __index = function() return function() return end end })
+  setmetatable(core, { __index = function() return function() return end end })
 end
-return _core
+
+return core
