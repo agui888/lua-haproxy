@@ -1,4 +1,4 @@
---- Embedded HTTP server.
+--- Embedded HTTP framework.
 -- @module haproxy.embed
 
 local http = {}
