@@ -6,9 +6,9 @@ local router = require('router')
 
 local class  = require('pl.class')
 
-local Request  = require('haproxy.server.request')
-local Response = require('haproxy.server.response')
-local http     = require('haproxy.server.http')
+local Request  = require('haproxy.embed.request')
+local Response = require('haproxy.embed.response')
+local http     = require('haproxy.embed.http')
 local core     = require('haproxy.core')
 local util     = require('haproxy.util')
 

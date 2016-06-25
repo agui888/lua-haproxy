@@ -1,7 +1,7 @@
 local core     = require('haproxy.core')
 local process  = require('haproxy.process')
-local Response = require('haproxy.server.response')
-local View     = require('haproxy.server.view')
+local Response = require('haproxy.embed.response')
+local View     = require('haproxy.embed.view')
 
 local ConfigView = View.new('ConfigView')
 

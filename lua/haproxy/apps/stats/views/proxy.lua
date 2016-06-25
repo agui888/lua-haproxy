@@ -1,5 +1,5 @@
-local View     = require('haproxy.server.view')
-local jsonify  = require('haproxy.server.jsonify')
+local View     = require('haproxy.embed.view')
+local jsonify  = require('haproxy.embed.jsonify')
 
 local ProxyView = View.new('ProxyView')
 

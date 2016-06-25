@@ -1,10 +1,10 @@
 --- Embedded HTTP server.
--- @module haproxy.server
+-- @module haproxy.embed
 
 local json = require('dkjson')
 
-local http     = require('haproxy.server.http')
-local Response = require('haproxy.server.response')
+local http     = require('haproxy.embed.http')
+local Response = require('haproxy.embed.response')
 
 --- Check if `value` is a table.
 -- @param value object

@@ -1,8 +1,8 @@
 local core     = require('haproxy.core')
 local util     = require('haproxy.util')
 
-local Response = require('haproxy.server.response')
-local View     = require('haproxy.server.view')
+local Response = require('haproxy.embed.response')
+local View     = require('haproxy.embed.view')
 
 local UnameView = View.new('UnameView')
 

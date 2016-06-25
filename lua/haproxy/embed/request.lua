@@ -1,5 +1,5 @@
 --- HTTP request
--- @classmod haproxy.server.Request
+-- @classmod haproxy.embed.Request
 -- @pragma nostrip
 
 local json = require('dkjson')
@@ -10,7 +10,7 @@ local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')
 local url     = require('pl.url')
 
-local http    = require('haproxy.server.http')
+local http    = require('haproxy.embed.http')
 
 --- A Request represents an API request.
 local Request = class()

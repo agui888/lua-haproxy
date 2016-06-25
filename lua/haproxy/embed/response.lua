@@ -1,11 +1,11 @@
 --- HTTP response
--- @classmod haproxy.server.Response
+-- @classmod haproxy.embed.Response
 -- @pragma nostrip
 
 local class  = require('pl.class')
 local tablex = require('pl.tablex')
 
-local http = require('haproxy.server.http')
+local http = require('haproxy.embed.http')
 
 --- A Response represents an API response.
 local Response = class()
