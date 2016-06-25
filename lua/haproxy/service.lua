@@ -1,4 +1,6 @@
---- @module app
+--- Service wraps the service configuration and HTTP router.
+-- @classmod haproxy.Service
+-- @pragma nostrip
 
 local router = require('router')
 
@@ -10,15 +12,11 @@ local http     = require('haproxy.server.http')
 local core     = require('haproxy.core')
 local util     = require('haproxy.util')
 
---- Service wraps the service configuration and HTTP router.
--- HAProxy initializes an instance of this class on startup.
--- @type Service
 local Service = class()
 
 --- Initialize a new API instance.
 -- @tparam table config application configuration
 -- @function Service.new
--- @see init
 function Service:_init()
   self.router = router.new()
 end
@@ -26,10 +24,8 @@ end
 Service.new = Service
 
 --- Dispatch a request to the router and return the response.
--- @tparam string method HTTP method
--- @tparam string path URL path
+-- @param request HTTP request
 -- @treturn Response the API response
--- @usage response = service:dispatch('GET', '/info')
 function Service:dispatch(request)
   local view, view_args = self.router:resolve(request.method, request.path)
   -- unknown method
@@ -45,7 +41,8 @@ end
 
 --- Register routes.
 -- @tparam table routes routes to register
--- @usage Service:register_routes({ ['/info'] = get_info })
+-- @tparam ?string prefix prepend routes with given prefix
+-- @usage Service:register_routes({ ['/info'] = api_info }, '/api')
 function Service:register_routes(routes, prefix)
   local prefix = prefix or ''
   -- We defer method handling to views. Configure the router to send all methods
@@ -60,6 +57,10 @@ function Service:register_routes(routes, prefix)
   self.router:match(matches)
 end
 
+--- Mount an application.
+-- Mounting an application adds its routes to the top-level router.
+-- @param app application module
+-- @tparam ?string prefix Prepend routes with this prefix.
 function Service:mount(app, prefix)
   local prefix = prefix or ''
 
@@ -72,6 +73,8 @@ function Service:mount(app, prefix)
   self:register_routes(prefixed_routes)
 end
 
+--- Serve a request.
+-- @param applet HAProxy AppletHTTP instance
 function Service:serve(applet)
   local request = Request.from_applet(applet)
   local response = self:dispatch(request)

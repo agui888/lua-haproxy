@@ -1,4 +1,6 @@
---- @module server
+--- HTTP request
+-- @classmod haproxy.server.Request
+-- @pragma nostrip
 
 local json = require('dkjson')
 
@@ -11,7 +13,6 @@ local url     = require('pl.url')
 local http    = require('haproxy.server.http')
 
 --- A Request represents an API request.
--- @type Request
 local Request = class()
 
 function Request:_init(request)
@@ -31,6 +32,9 @@ function Request:_init(request)
   end
 end
 
+--- Parse request query string.
+-- @tparam string qs query string
+-- @treturn table parsed results
 function Request.parse_query_string(qs)
   local result = {}
   if not qs then
@@ -44,6 +48,9 @@ function Request.parse_query_string(qs)
   return result
 end
 
+--- Construct a Request from an AppletHTTP instance.
+-- @tparam AppletHTTP applet
+-- @treturn Request
 function Request.from_applet(applet)
   local unsafe_methods = Set{http.method.PATCH, http.method.POST, http.method.PUT}
   local request = Request{
@@ -58,6 +65,9 @@ function Request.from_applet(applet)
   return request
 end
 
+--- Decode JSON data in request body.
+-- @tparam ?bool force Decode request data as JSON regardless of Content-Type.
+-- @treturn table decoded data
 function Request:json(force)
   -- Because headers can have multiple values, HAProxy provides values as a
   -- 0-indexed array.

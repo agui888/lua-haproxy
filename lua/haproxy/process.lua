@@ -1,5 +1,9 @@
+--- Inspect the parent HAProxy process.
+--- @module haproxy.process
 local M = {}
 
+--- Return the command line used to invoke HAProxy.
+-- @treturn string
 function M.cmdline()
   local f = assert(io.open('/proc/self/cmdline', 'rb'))
   local s = f:read('*a')
@@ -7,6 +11,9 @@ function M.cmdline()
   return s
 end
 
+--- Return the current loaded configuration. Assembles all configuration files
+-- passed on the command line.
+-- @treturn string
 function M.config()
   local cmdline = M.cmdline()
   local files = {}

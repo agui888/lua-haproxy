@@ -1,4 +1,5 @@
---- @module server
+--- Embedded HTTP server.
+-- @module haproxy.server
 
 local http = {}
 

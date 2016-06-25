@@ -1,6 +1,8 @@
+--- Extends HAProxy core API.
+--- @module haproxy.core
 local core = _G['core'] or {}
 
--- Shared state between middleware.
+--- Use `core.ctx` to share state between apps.
 core.ctx = {}
 
 -- Problem: amalg executes a script (`lua -l amalg`) to identify its

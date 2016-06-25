@@ -1,4 +1,5 @@
---- @module server
+--- Embedded HTTP server.
+-- @module haproxy.server
 
 local json = require('dkjson')
 
@@ -15,6 +16,7 @@ local function is_table(value) return type(value) == 'table' end
 -- length of the serialized obj. If `obj` is a table, sorts the keys. 
 -- @param obj object to serialize
 -- @treturn Response the JSON response
+-- @function jsonify
 local function jsonify(obj)
   local json_encode_state = {}
   if is_table(obj) then
@@ -34,4 +36,5 @@ local function jsonify(obj)
   return Response(http.status.OK, body, headers)
 end
 
+-- @export
 return jsonify

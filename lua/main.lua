@@ -1,9 +1,9 @@
 --- Somewhat RESTful API for HAProxy.
--- @script haproxy-api
+-- @script lua-haproxy-api
 -- @usage
 -- global
 --   stats socket /run/haproxy/admin.sock mode 660 level admin
---   lua-load /etc/haproxy/haproxy-api.lua
+--   lua-load /etc/haproxy/lua-haproxy-api.lua
 --
 -- frontend example
 --   http-request use-service lua.haproxy-api

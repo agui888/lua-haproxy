@@ -1,16 +1,5 @@
---- High-level Lua client for HAProxy.
---
--- HAProxy [exposes a Lua API](http://www.arpalert.org/src/haproxy-lua-api/1.6/)
--- that can be used to run Lua scripts inside HAProxy. The native API is quite
--- low-level. It may be considered a base for implementing more complex
--- functionality.
---
--- This module wraps the native API with a friendly, object-oriented wrapper.
--- Lua code can load this module within an HAProxy applet context, or completely
--- outside HAProxy. The only requirement is that the module has access to the
--- [stats socket](http://git.haproxy.org/?p=haproxy-1.6.git;a=blob;f=doc/management.txt;hb=v1.6.3#l1007).
---
--- @module haproxy
+--- Stats socket client.
+-- @module haproxy.stats
 local class   = require('pl.class')
 local stringx = require('pl.stringx')
 local tablex  = require('pl.tablex')
@@ -258,7 +247,7 @@ end
 -- @tparam string backend
 -- @tparam string server
 -- @treturn table
--- FIXME: not implemented
+-- @fixme not implemented
 function Client:get_state(backend, server)
   local response = self:execute('show servers state ' .. backend)
   local _, _, data = stringx.partition(response, '\n')
