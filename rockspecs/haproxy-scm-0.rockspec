@@ -9,7 +9,9 @@ description = {
   license  = 'MIT',
 }
 dependencies = {
-  'lua >= 5.2',
+  'dkjson',
+  'router',
+  'lua >= 5.3',
   'penlight >= 1.3',
 }
 build = {
