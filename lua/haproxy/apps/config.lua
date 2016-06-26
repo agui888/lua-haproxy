@@ -6,7 +6,7 @@ local View     = require('haproxy.embed.view')
 local ConfigView = View.new('ConfigView')
 
 function ConfigView:get(request, context)
-  return Response(200, core.ctx.config)
+  return Response(200, core.ctx.config, { ['Content-Type'] = 'text/plain', })
 end
 
 local function init()

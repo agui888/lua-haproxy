@@ -7,7 +7,7 @@ local View     = require('haproxy.embed.view')
 local UnameView = View.new('UnameView')
 
 function UnameView:get(request, context)
-  return Response(200, core.ctx.uname)
+  return Response(200, core.ctx.uname, { ['Content-Type'] = 'text/plain', })
 end
 
 local function init()
