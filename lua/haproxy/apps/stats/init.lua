@@ -1,13 +1,14 @@
 local stats   = require('haproxy.stats')
 local View    = require('haproxy.embed.view')
 local jsonify = require('haproxy.embed.jsonify')
+local process = require('haproxy.process')
 
 local views   = require('haproxy.apps.stats.views')
 
 local StatsView = View.new('StatsView')
 
 local function init()
-  core.ctx.stats = stats.Client('/tmp/haproxy.sock')
+  core.ctx.stats = stats.Client(process.stats_socket())
 end
 
 function StatsView:get(request, context)

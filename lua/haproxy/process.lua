@@ -37,4 +37,11 @@ function M.config()
   return config
 end
 
+--- Attempt to locate the process's stats socket.
+-- @treturn string path to socket
+function M.stats_socket()
+  local config = M.config()
+  return string.match(config, 'stats%s+socket%s+(%S+)')
+end
+
 return M
