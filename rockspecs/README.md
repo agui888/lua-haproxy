@@ -1,4 +1,4 @@
-# haproxy.lua rockspecs
+# lua-haproxy rockspecs
 
 **N.B.** In general, directories under the top-level should be singular
 (`rockspec` cf.  `rockspecs`). However, `luarocks make` does not differentiate

@@ -1,9 +1,9 @@
 .PHONY: all check clean depend dist doc install uninstall test
 
-PROJECT  = haproxy.lua
+PROJECT  = lua-haproxy
 PACKAGE  = haproxy
 VERSION := $(shell git describe --always --dirty)
-RELEASE  = $(PACKAGE)-$(VERSION)
+RELEASE  = $(PROJECT)-api-$(VERSION)
 OS      := $(shell uname -s | tr [:upper:] [:lower:])
 ARCH    := $(shell uname -m)
 BUILD    = $(RELEASE)-$(OS)-$(ARCH)
@@ -24,7 +24,7 @@ all:
 	cp -r lua/* build
 	cd build && $(LUA) -l amalg main.lua
 	cd build && $(AMALG) -s main.lua -a -c -x | sed 's|$(PWD)||g' > $(RELEASE).lua
-	cd build && ln -sf $(RELEASE).lua haproxy-latest.lua
+	cd build && ln -sf $(RELEASE).lua $(PROJECT)-api-latest.lua
 
 check:
 	luacheck lua/

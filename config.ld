@@ -1,7 +1,7 @@
 -- vim: set ft=lua: --
-project = 'haproxy.lua'
-description = 'haproxy.lua 0.1.0'
-title = 'haproxy.lua documentation'
+project = 'lua-haproxy'
+description = 'lua-haproxy 0.1.0'
+title = 'lua-haproxy documentation'
 style = '!fixed'
 use_markdown_titles = true
 format = 'markdown'

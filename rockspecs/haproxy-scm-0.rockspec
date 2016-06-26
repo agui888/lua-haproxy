@@ -1,11 +1,11 @@
 package = 'haproxy'
 version = 'scm-0'
 source = {
-  url = 'https://github.com/benwebber/haproxy.lua/',
+  url = 'https://github.com/benwebber/lua-haproxy/',
 }
 description = {
   summary  = 'High-level Lua client for HAProxy',
-  homepage = 'https://github.com/benwebber/haproxy.lua/',
+  homepage = 'https://github.com/benwebber/lua-haproxy/',
   license  = 'MIT',
 }
 dependencies = {
