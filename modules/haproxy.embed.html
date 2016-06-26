@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>lua-haproxy documentation</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>lua-haproxy</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/haproxy.core.html">haproxy.core</a></li>
+  <li><strong>haproxy.embed</strong></li>
+  <li><a href="../modules/haproxy.process.html">haproxy.process</a></li>
+  <li><a href="../modules/haproxy.stats.html">haproxy.stats</a></li>
+  <li><a href="../modules/haproxy.util.html">haproxy.util</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/lua-haproxy-api.html">lua-haproxy-api</a></li>
+</ul>
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../classes/haproxy.embed.Request.html">haproxy.embed.Request</a></li>
+  <li><a href="../classes/haproxy.embed.Response.html">haproxy.embed.Response</a></li>
+  <li><a href="../classes/haproxy.embed.View.html">haproxy.embed.View</a></li>
+  <li><a href="../classes/haproxy.Service.html">haproxy.Service</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>haproxy.embed</code></h1>
+<p>Embedded HTTP framework.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#jsonify">jsonify (obj)</a></td>
+	<td class="summary">Build a JSON response.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#http.method">http.method</a></td>
+	<td class="summary">RFC2616 HTTP/1.1 methods</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#http.status">http.status</a></td>
+	<td class="summary">RFC2616 HTTP/1.1 status codes</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "jsonify"></a>
+    <strong>jsonify (obj)</strong>
+    </dt>
+    <dd>
+    Build a JSON response.
+ Sets <code>Content-Type: application/json</code> and <code>Content-Length</code> based on the
+ length of the serialized obj. If <code>obj</code> is a table, sorts the keys.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">obj</span>
+         object to serialize
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Response</span></span>
+        the JSON response
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "http.method"></a>
+    <strong>http.method</strong>
+    </dt>
+    <dd>
+    RFC2616 HTTP/1.1 methods
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">DELETE</span>
+
+
+
+        </li>
+        <li><span class="parameter">GET</span>
+
+
+
+        </li>
+        <li><span class="parameter">HEAD</span>
+
+
+
+        </li>
+        <li><span class="parameter">OPTIONS</span>
+
+
+
+        </li>
+        <li><span class="parameter">PATCH</span>
+
+
+
+        </li>
+        <li><span class="parameter">POST</span>
+
+
+
+        </li>
+        <li><span class="parameter">PUT</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "http.status"></a>
+    <strong>http.status</strong>
+    </dt>
+    <dd>
+    RFC2616 HTTP/1.1 status codes
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">CONTINUE</span>
+        <code>100 Continue</code>
+        </li>
+        <li><span class="parameter">SWITCHING_PROTOCOLS</span>
+        <code>101 Switching Protocols</code>
+        </li>
+        <li><span class="parameter">OK</span>
+        <code>200 OK</code>
+        </li>
+        <li><span class="parameter">CREATED</span>
+        <code>201 Created</code>
+        </li>
+        <li><span class="parameter">ACCEPTED</span>
+        <code>202 Accepted</code>
+        </li>
+        <li><span class="parameter">NON_AUTHORITATIVE_INFORMATION</span>
+        <code>203 Non-Authoritative Information</code>
+        </li>
+        <li><span class="parameter">NO_CONTENT</span>
+        <code>204 No Content</code>
+        </li>
+        <li><span class="parameter">RESET_CONTENT</span>
+        <code>205 Reset Content</code>
+        </li>
+        <li><span class="parameter">PARTIAL_CONTENT</span>
+        <code>206 Partial Content</code>
+        </li>
+        <li><span class="parameter">MULTIPLE_CHOICES</span>
+        <code>300 Multiple Choices</code>
+        </li>
+        <li><span class="parameter">MOVED_PERMANENTLY</span>
+        <code>301 Moved Permanently</code>
+        </li>
+        <li><span class="parameter">FOUND</span>
+        <code>302 Found</code>
+        </li>
+        <li><span class="parameter">SEE_OTHER</span>
+        <code>303 See Other</code>
+        </li>
+        <li><span class="parameter">NOT_MODIFIED</span>
+        <code>304 Not Modified</code>
+        </li>
+        <li><span class="parameter">USE_PROXY</span>
+        <code>305 Use Proxy</code>
+        </li>
+        <li><span class="parameter">TEMPORARY_REDIRECT</span>
+        <code>307 Temporary Redirect</code>
+        </li>
+        <li><span class="parameter">BAD_REQUEST</span>
+        <code>400 Bad Request</code>
+        </li>
+        <li><span class="parameter">UNAUTHORIZED</span>
+        <code>401 Unauthorized</code>
+        </li>
+        <li><span class="parameter">PAYMENT_REQUIRED</span>
+        <code>402 Payment Required</code>
+        </li>
+        <li><span class="parameter">FORBIDDEN</span>
+        <code>403 Forbidden</code>
+        </li>
+        <li><span class="parameter">NOT_FOUND</span>
+        <code>404 Not Found</code>
+        </li>
+        <li><span class="parameter">METHOD_NOT_ALLOWED</span>
+        <code>405 Method Not Allowed</code>
+        </li>
+        <li><span class="parameter">NOT_ACCEPTABLE</span>
+        <code>406 Not Acceptable</code>
+        </li>
+        <li><span class="parameter">PROXY_AUTHENTICATION_REQUIRED</span>
+        <code>407 Proxy Authentication Required</code>
+        </li>
+        <li><span class="parameter">REQUEST_TIME_OUT</span>
+        <code>408 Request Time-out</code>
+        </li>
+        <li><span class="parameter">CONFLICT</span>
+        <code>409 Conflict</code>
+        </li>
+        <li><span class="parameter">GONE</span>
+        <code>410 Gone</code>
+        </li>
+        <li><span class="parameter">LENGTH_REQUIRED</span>
+        <code>411 Length Required</code>
+        </li>
+        <li><span class="parameter">PRECONDITION_FAILED</span>
+        <code>412 Precondition Failed</code>
+        </li>
+        <li><span class="parameter">REQUEST_ENTITY_TOO_LARGE</span>
+        <code>413 Request Entity Too Large</code>
+        </li>
+        <li><span class="parameter">REQUEST_URI_TOO_LARGE</span>
+        <code>414 Request-URI Too Large</code>
+        </li>
+        <li><span class="parameter">UNSUPPORTED_MEDIA_TYPE</span>
+        <code>415 Unsupported Media Type</code>
+        </li>
+        <li><span class="parameter">REQUESTED_RANGE_NOT_SATISFIABLE</span>
+        <code>416 Requested range not satisfiable</code>
+        </li>
+        <li><span class="parameter">EXPECTATION_FAILED</span>
+        <code>417 Expectation Failed</code>
+        </li>
+        <li><span class="parameter">IM_A_TEAPOT</span>
+        <code>I&apos;m a teapot</code>
+        </li>
+        <li><span class="parameter">INTERNAL_SERVER_ERROR</span>
+        <code>500 Internal Server Error</code>
+        </li>
+        <li><span class="parameter">NOT_IMPLEMENTED</span>
+        <code>501 Not Implemented</code>
+        </li>
+        <li><span class="parameter">BAD_GATEWAY</span>
+        <code>502 Bad Gateway</code>
+        </li>
+        <li><span class="parameter">SERVICE_UNAVAILABLE</span>
+        <code>503 Service Unavailable</code>
+        </li>
+        <li><span class="parameter">GATEWAY_TIME_OUT</span>
+        <code>504 Gateway Time-out</code>
+        </li>
+        <li><span class="parameter">HTTP_VERSION_NOT_SUPPORTED</span>
+        <code>505 HTTP Version not supported</code>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2016-06-26 17:50:20 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

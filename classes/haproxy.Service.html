@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>lua-haproxy documentation</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>lua-haproxy</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Classes</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>haproxy.Service</strong></li>
+  <li><a href="../classes/haproxy.embed.Request.html">haproxy.embed.Request</a></li>
+  <li><a href="../classes/haproxy.embed.Response.html">haproxy.embed.Response</a></li>
+  <li><a href="../classes/haproxy.embed.View.html">haproxy.embed.View</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../modules/haproxy.core.html">haproxy.core</a></li>
+  <li><a href="../modules/haproxy.embed.html">haproxy.embed</a></li>
+  <li><a href="../modules/haproxy.process.html">haproxy.process</a></li>
+  <li><a href="../modules/haproxy.stats.html">haproxy.stats</a></li>
+  <li><a href="../modules/haproxy.util.html">haproxy.util</a></li>
+</ul>
+<h2>Scripts</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><a href="../scripts/lua-haproxy-api.html">lua-haproxy-api</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Class <code>haproxy.Service</code></h1>
+<p>Service wraps the service configuration and HTTP router.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Service.new">Service.new (config)</a></td>
+	<td class="summary">Initialize a new API instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Service:dispatch">Service:dispatch (request)</a></td>
+	<td class="summary">Dispatch a request to the router and return the response.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Service:mount">Service:mount (app, prefix)</a></td>
+	<td class="summary">Mount an application.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Service:register_routes">Service:register_routes (routes, prefix)</a></td>
+	<td class="summary">Register routes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Service:serve">Service:serve (applet)</a></td>
+	<td class="summary">Serve a request.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Service.new"></a>
+    <strong>Service.new (config)</strong>
+    </dt>
+    <dd>
+    Initialize a new API instance.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">config</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         application configuration
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Service:dispatch"></a>
+    <strong>Service:dispatch (request)</strong>
+    </dt>
+    <dd>
+    Dispatch a request to the router and return the response.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">request</span>
+         HTTP request
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Response</span></span>
+        the API response
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Service:mount"></a>
+    <strong>Service:mount (app, prefix)</strong>
+    </dt>
+    <dd>
+    Mount an application.
+ Mounting an application adds its routes to the top-level router.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">app</span>
+         application module
+        </li>
+        <li><span class="parameter">prefix</span>
+            <span class="types">optional <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         Prepend routes with this prefix.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Service:register_routes"></a>
+    <strong>Service:register_routes (routes, prefix)</strong>
+    </dt>
+    <dd>
+    Register routes.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">routes</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.5">table</a></span>
+         routes to register
+        </li>
+        <li><span class="parameter">prefix</span>
+            <span class="types">optional <a class="type" href="http://www.lua.org/manual/5.2/manual.html#6.4">string</a></span>
+         prepend routes with given prefix
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">Service:register_routes({ [<span class="string">'/info'</span>] = api_info }, <span class="string">'/api'</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "Service:serve"></a>
+    <strong>Service:serve (applet)</strong>
+    </dt>
+    <dd>
+    Serve a request.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">applet</span>
+         HAProxy AppletHTTP instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.3</a></i>
+<i style="float:right;">Last updated 2016-06-26 17:50:20 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
