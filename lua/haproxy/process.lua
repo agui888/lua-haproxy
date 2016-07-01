@@ -1,5 +1,7 @@
 local util = require('haproxy.util')
 
+local stringx = require('pl.stringx')
+
 --- Inspect the parent HAProxy process.
 --- @module haproxy.process
 local M = {}
@@ -13,10 +15,9 @@ function M.cmdline()
   return s
 end
 
---- Return the current loaded configuration. Assembles all configuration files
--- passed on the command line.
--- @treturn string
-function M.config()
+--- Return list of files used to configure the running process.
+-- @treturn table
+function M.config_files()
   local cmdline = M.cmdline()
   local files = {}
   local previous
@@ -30,7 +31,28 @@ function M.config()
     end
     previous = token
   end
+  return files
+end
+
+--- Return the current loaded configuration. Assembles all configuration files
+-- passed on the command line.
+-- @treturn string
+function M.config()
+  local files = M.config_files()
   return util.cat(files)
+end
+
+--- Return the current loaded configuration as a walkable table organized by
+-- filename.
+-- @treturn table
+function M.config_lines()
+  local results = {}
+  local files = M.config_files()
+  for _, filename in ipairs(files) do
+    local file = util.cat({filename})
+    results[filename] = stringx.splitlines(file)
+  end
+  return results
 end
 
 --- Attempt to locate the process's stats socket.
