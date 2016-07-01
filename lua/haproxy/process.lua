@@ -1,3 +1,5 @@
+local util = require('haproxy.util')
+
 --- Inspect the parent HAProxy process.
 --- @module haproxy.process
 local M = {}
@@ -28,13 +30,7 @@ function M.config()
     end
     previous = token
   end
-  local config = ''
-  for _, file in ipairs(files) do
-    local f = assert(io.open(file, 'r'))
-    config = config .. f:read('*a')
-    f:close()
-  end
-  return config
+  return util.cat(files)
 end
 
 --- Attempt to locate the process's stats socket.

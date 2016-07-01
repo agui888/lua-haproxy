@@ -11,6 +11,19 @@ function M.uname()
   return os_name
 end
 
+--- Concatenate multiple files.
+-- @tparam table files
+-- @treturn string
+function M.cat(files)
+  local config = ''
+  for _, file in ipairs(files) do
+    local f = assert(io.open(file, 'r'))
+    config = config .. f:read('*a')
+    f:close()
+  end
+  return config
+end
+
 --- Return whether a table contains the named function.
 -- @tparam table obj to inspect
 -- @tparam string method function name to check
