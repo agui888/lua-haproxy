@@ -11,8 +11,7 @@ function ConfigView:get(request, context)
 end
 
 local function init()
-  core.ctx.config       = process.config()
-  core.ctx.config_lines = process.config_lines()
+  core.ctx.config = process.config()
 end
 
 return {
