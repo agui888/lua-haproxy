@@ -19,7 +19,13 @@ local Response = class()
 -- @see http.status
 function Response:_init(status_code, body, headers)
   self.status_code = status_code or http.status.OK
-  self.body = body or ''
+  if body and type(body) == 'string' then
+    self.body = body
+  elseif body and type(body) ~= 'string' then
+    self.body = tostring(body)
+  else
+    self.body = ''
+  end
   local default_headers = { ['Content-Length'] = self.body:len() }
   self.headers = tablex.update(default_headers, headers or {})
 end
