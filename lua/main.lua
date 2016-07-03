@@ -13,6 +13,7 @@ local Service = require('haproxy.service')
 local config  = require('haproxy.apps.config')
 local stats   = require('haproxy.apps.stats')
 local uname   = require('haproxy.apps.uname')
+local acl     = require('haproxy.apps.acl')
 
 -- declared here to satisfy strict mode
 local service
@@ -36,4 +37,5 @@ local function main(applet)
 end
 
 core.register_init(init)
+core.register_action('logger', { 'http-req' }, acl.action)
 core.register_service('haproxy-api', 'http', main)
