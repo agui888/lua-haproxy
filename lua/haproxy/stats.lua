@@ -18,6 +18,39 @@ local stats_types = {
   SOCKET   = 3, -- socket
 }
 
+--- @type HAProxy ACL
+local ACL = class.new()
+
+function ACL:_init(id, method, file, lineno)
+  self.id     = tonumber(id)
+  self.method = method
+  self.file   = file
+  self.lineno = tonumber(lineno)
+  self.args   = self:get_args()
+end
+
+function ACL:get_args()
+  local line = core.ctx.config:get_line(self.file, self.lineno)
+  local pattern = self.method .. '%(([%w_%-,]+)%)'
+  local args = string.match(line, pattern)
+  if args then
+    return stringx.split(args, ',')
+  else
+    return {}
+  end
+end
+
+function ACL:match(s)
+  return stringx.strip(core.ctx.stats:execute('get acl #' .. self.id .. ' ' .. s))
+end
+
+function ACL:contents()
+  local contents = core.ctx.stats:execute('show acl #' .. self.id)
+  return stats.parse_map(contents)
+end
+
+ACL.new = ACL
+
 --- Parse HAProxy info output to a table.
 -- The JSON representation of this table would be a sorted hash.
 -- @tparam string data key-value data
@@ -62,6 +95,30 @@ local function parse_stats(csv, sep)
       result[headers[i]] = field
     end
     results[#results+1] = result
+  end
+  return results
+end
+
+local function parse_map(data)
+  local results = {}
+  for line in string.gmatch(data, "[^\r\n]+") do
+    local address, entry = string.match(line, '(%g+)%s+(%g+)')
+    results[address] = entry
+  end
+  return results
+end
+
+local ACL_EXPR = '^(%-?%d+) .* acl \'(%S+)\' file \'(%S+)\' line (%d+)'
+
+local function parse_acls(data)
+  local results = {}
+  for line in string.gmatch(data, '[^\r\n]+') do
+    -- Only match entries referring to acl lines in the configuration, not
+    -- sample files.
+    if string.match(line, '%(%)') then
+      local id, method, file, lineno = string.match(line, ACL_EXPR)
+      results[#results+1] = ACL(id, method, file, lineno)
+    end
   end
   return results
 end
@@ -266,4 +323,6 @@ return {
   stats_types = stats_types,
   parse_info  = parse_info,
   parse_stats = parse_stats,
+  parse_map   = parse_map,
+  parse_acls  = parse_acls,
 }

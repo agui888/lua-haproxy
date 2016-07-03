@@ -27,6 +27,14 @@ function M.Config:__tostring()
   return table.concat(lines, '\n')
 end
 
+function M.Config:get_line(filename, lineno)
+  for _, f in ipairs(self.config) do
+    if f.file == filename then
+      return f.lines[lineno]
+    end
+  end
+end
+
 --- Return the command line used to invoke HAProxy.
 -- @treturn string
 function M.cmdline()
