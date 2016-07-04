@@ -6,6 +6,32 @@ local inspect = require('inspect')
 local stats = require('haproxy.stats')
 local util  = require('haproxy.util')
 
+local function test_headers(acl, method, txn)
+  local headers = txn.http:req_get_headers()
+  for name, values in pairs(headers) do
+    for _, value in pairs(values) do
+      if value == txn.f[method](txn.f, table.unpack(acl.args)) then
+        local check = acl:match(value)
+        if check:find('match=yes') then
+          txn:Info('request matches ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+        else
+          txn:Info('request does not match ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+        end
+      end
+    end
+  end
+end
+
+local function test_method(acl, method, txn)
+  local fetch = txn.f[method](txn.f, table.unpack(acl.args))
+  local check = acl:match(fetch)
+  if check:find('match=yes') then
+    txn:Info('request matches ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+  else
+    txn:Info('request does not match ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+  end
+end
+
 local function action(txn)
   -- Construct ACLs.
   local data = core.ctx.stats:execute('show acl')
@@ -18,19 +44,9 @@ local function action(txn)
 
       -- Match header ACLs.
       if method:match('hdr') then
-        local headers = txn.http:req_get_headers()
-        for name, values in pairs(headers) do
-          for _, value in pairs(values) do
-            if value == txn.f[method](txn.f, table.unpack(acl.args)) then
-              local check = acl:match(value)
-              if check:find('match=yes') then
-                txn:Info('request matches ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
-              else
-                txn:Info('request does not match ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
-              end
-            end
-          end
-        end
+        test_headers(acl, method, txn)
+      else
+        test_method(acl, method, txn)
       end
 
     else
