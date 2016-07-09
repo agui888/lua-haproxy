@@ -13,9 +13,9 @@ local function test_headers(acl, method, txn)
       if value == txn.f[method](txn.f, table.unpack(acl.args)) then
         local check = acl:match(value)
         if check:find('match=yes') then
-          txn:Info('request matches ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
-        else
-          txn:Info('request does not match ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+          local data = txn:get_priv() or {}
+          data[#data+1] = acl
+          txn:set_priv(data)
         end
       end
     end
@@ -26,9 +26,9 @@ local function test_method(acl, method, txn)
   local fetch = txn.f[method](txn.f, table.unpack(acl.args))
   local check = acl:match(fetch)
   if check:find('match=yes') then
-    txn:Info('request matches ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
-  else
-    txn:Info('request does not match ACL ' .. acl.method .. ' on ' .. acl.file .. ':' .. acl.lineno)
+    local data = txn:get_priv() or {}
+    data[#data+1] = acl
+    txn:set_priv(data)
   end
 end
 
@@ -52,6 +52,9 @@ local function action(txn)
     else
       txn:Warning('cannot match ACL method \'' .. method .. '\' to internal fetch method')
     end
+  end
+  for _, acl in ipairs(txn:get_priv()) do
+    txn:Info(tostring(acl))
   end
 end
 
