@@ -7,7 +7,7 @@ local stats = require('haproxy.stats')
 local util  = require('haproxy.util')
 local App   = require('haproxy.app')
 
-local app = App()
+local app = App('acl')
 
 local function test_headers(acl, method, txn)
   local headers = txn.http:req_get_headers()

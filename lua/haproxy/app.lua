@@ -4,7 +4,8 @@ local App = class.new()
 
 App.new = App
 
-function App:_init()
+function App:_init(name)
+  self.name         = name
   self.actions      = {}
   self.converters   = {}
   self.fetches      = {}

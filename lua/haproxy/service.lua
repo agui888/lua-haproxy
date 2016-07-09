@@ -78,6 +78,8 @@ end
 
 function Service:mount_app(app, prefix)
   for _, action in ipairs(app.actions) do
+    -- Prefix action with app namespace.
+    action[1] = app.name .. '.' .. action[1]
     core.register_action(table.unpack(action))
   end
 end
