@@ -5,6 +5,9 @@ local inspect = require('inspect')
 
 local stats = require('haproxy.stats')
 local util  = require('haproxy.util')
+local App   = require('haproxy.app')
+
+local app = App()
 
 local function test_headers(acl, method, txn)
   local headers = txn.http:req_get_headers()
@@ -32,7 +35,7 @@ local function test_method(acl, method, txn)
   end
 end
 
-local function action(txn)
+app:register_action('logger', { 'http-req' }, function(txn)
   -- Construct ACLs.
   local data = core.ctx.stats:execute('show acl')
   core.ctx.acls = stats.parse_acls(data)
@@ -56,8 +59,6 @@ local function action(txn)
   for _, acl in ipairs(txn:get_priv()) do
     txn:Info('request matched ' .. tostring(acl))
   end
-end
+end)
 
-return {
-  action = action,
-}
+return app

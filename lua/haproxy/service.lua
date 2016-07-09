@@ -6,6 +6,8 @@ local router = require('router')
 
 local class  = require('pl.class')
 
+local pretty = require('pl.pretty')
+
 local Request  = require('haproxy.embed.request')
 local Response = require('haproxy.embed.response')
 local http     = require('haproxy.embed.http')
@@ -19,6 +21,7 @@ local Service = class()
 -- @function Service.new
 function Service:_init()
   self.router = router.new()
+  self.actions = {}
 end
 
 Service.new = Service
@@ -71,6 +74,12 @@ function Service:mount(app, prefix)
     prefixed_routes[prefix .. route] = view
   end
   self:register_routes(prefixed_routes)
+end
+
+function Service:mount_app(app, prefix)
+  for _, action in ipairs(app.actions) do
+    core.register_action(table.unpack(action))
+  end
 end
 
 --- Serve a request.

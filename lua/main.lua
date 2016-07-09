@@ -16,14 +16,15 @@ local uname   = require('haproxy.apps.uname')
 local acl     = require('haproxy.apps.acl')
 
 -- declared here to satisfy strict mode
-local service
+local service = Service()
+
+service:mount_app(acl)
 
 --- Initialize the service.
 -- Load the API configuration and routing table.
 -- HAProxy executes this function once on startup.
 -- @usage core.register_init(init)
 local function init()
-  service = Service()
   service:mount(config, '/config')
   service:mount(stats, '/stats')
   service:mount(uname, '/uname')
@@ -37,5 +38,4 @@ local function main(applet)
 end
 
 core.register_init(init)
-core.register_action('logger', { 'http-req' }, acl.action)
 core.register_service('haproxy-api', 'http', main)
