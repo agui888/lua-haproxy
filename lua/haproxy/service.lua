@@ -73,10 +73,9 @@ function Service:mount(app, prefix)
   for route, view in pairs(app.routes) do
     prefixed_routes[prefix .. route] = view
   end
-  self:register_routes(prefixed_routes)
-end
 
-function Service:mount_app(app, prefix)
+  self:register_routes(prefixed_routes)
+
   for _, action in ipairs(app.actions) do
     -- Prefix action with app namespace.
     action[1] = app.name .. '.' .. action[1]

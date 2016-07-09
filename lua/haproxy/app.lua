@@ -12,6 +12,7 @@ function App:_init(name)
   self.init         = nil
   self.services     = {}
   self.tasks        = {}
+  self.routes       = {}
 end
 
 function App:register_action(name, actions, func)
@@ -36,6 +37,10 @@ end
 
 function App:register_task(f)
   self.tasks[#self.tasks + 1] = f
+end
+
+function App:register_routes(routes)
+  self.routes = routes
 end
 
 return App

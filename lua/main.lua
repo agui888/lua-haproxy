@@ -18,7 +18,7 @@ local acl     = require('haproxy.apps.acl')
 -- declared here to satisfy strict mode
 local service = Service()
 
-service:mount_app(acl)
+service:mount(acl)
 
 --- Initialize the service.
 -- Load the API configuration and routing table.
