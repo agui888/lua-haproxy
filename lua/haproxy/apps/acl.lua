@@ -54,7 +54,7 @@ local function action(txn)
     end
   end
   for _, acl in ipairs(txn:get_priv()) do
-    txn:Info(tostring(acl))
+    txn:Info('request matched ' .. tostring(acl))
   end
 end
 

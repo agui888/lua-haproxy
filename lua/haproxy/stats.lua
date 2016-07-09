@@ -29,6 +29,19 @@ function ACL:_init(id, method, file, lineno)
   self.args   = self:get_args()
 end
 
+function ACL:__tostring()
+  return 'acl #'
+         .. self.id
+         .. ' '
+         .. self.method
+         .. '('
+         .. table.concat(self.args, ', ')
+         .. ') at '
+         .. self.file
+         .. ':'
+         .. self.lineno
+end
+
 function ACL:get_args()
   local line = core.ctx.config:get_line(self.file, self.lineno)
   local pattern = self.method .. '%(([%w_%-,]+)%)'
