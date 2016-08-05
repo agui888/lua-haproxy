@@ -3,7 +3,7 @@
 HAPROXY_VERSION     = 1.6.5
 HAPROXY             = haproxy-$(HAPROXY_VERSION)
 HAPROXY_URL         = http://www.haproxy.org/download/$(basename $(HAPROXY_VERSION))
-HAPROXY_BUILD_FLAGS = USE_LUA=1 LUA_LIB=$(PWD)/lib LUA_INC=$(PWD)/include
+HAPROXY_BUILD_FLAGS = USE_LUA=1 LUA_LIB=$(PWD)/lib LUA_INC=$(PWD)/include USE_PCRE=1
 
 LUA_VERSION = 5.3.3
 LUA         = lua-$(LUA_VERSION)

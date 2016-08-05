@@ -1,6 +1,6 @@
 $script = <<EOF
 apt-get -y update
-apt-get -y install build-essential git libreadline-dev libssl-dev unzip
+apt-get -y install build-essential git libreadline-dev libpcre3-dev libssl-dev unzip
 cd /vagrant/vendor
 make
 EOF
