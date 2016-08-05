@@ -90,5 +90,5 @@ src/$(LUAROCKS): %: %.tar.gz
 	tar -xzf $< -C src
 
 src/$(LUAROCKS).tar.gz: src
-	$(WGET) -P $< $(LUAROCKS_URL)/$@
+	$(WGET) -P $< $(LUAROCKS_URL)/$(notdir $@)
 	grep $@ SHA256SUMS | sha256sum -c
