@@ -19,20 +19,20 @@ function App:register_action(name, actions, func)
   self.actions[#self.actions + 1] = { name, actions, func }
 end
 
-function App:register_converter(f)
-  self.converters[#self.converters + 1] = f
+function App:register_converter(name, func)
+  self.converters[#self.converters + 1] = { name, func }
 end
 
-function App:register_fetch(f)
-  self.fetches[#self.fetches + 1] = f
+function App:register_fetch(name, func)
+  self.fetches[#self.fetches + 1] = { name, func }
 end
 
 function App:register_init(f)
   self.init = f
 end
 
-function App:register_service(f)
-  self.services[#self.services + 1] = f
+function App:register_service(name, mode, func)
+  self.services[#self.services + 1] = { name, mode, func }
 end
 
 function App:register_task(f)
